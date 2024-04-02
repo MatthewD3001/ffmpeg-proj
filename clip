@@ -12,7 +12,7 @@ fi
 
 FILE_PATH="/mnt/e/"$(sed 's/\\/\//g' <<< ${1} | cut -c 4-)
 START=$(echo ${2} | awk -F: '{ print ($1 * 60) + $2 }')
-END=$(echo $(echo ${3} | awk -F: '{ print (($1 * 60) + $2) }') - $START | bc)
+END=$(echo ${3} | awk -F: '{ print (($1 * 60) + $2) }')
 OUT_NAME=${4}".webm"
 
 debug(){
@@ -23,5 +23,5 @@ debug(){
 }
 debug
 
-#ffmpeg -ss $START -i "$FILE_PATH" -to $END -c:v libvpx-vp9 -b:v 0 -crf 30 -pass 1 -an -sn -f null /dev/null && \
-#    ffmpeg -ss $START -i "$FILE_PATH" -to $END -c:v libvpx-vp9 -b:v 0 -crf 30 -pass 2 -c:a libopus -b:a 192k -sn $OUT_NAME
+ffmpeg -ss $START -to $END -i "$FILE_PATH" -c:v libvpx-vp9 -b:v 0 -crf 30 -map_chapters -1 -pass 1 -an -sn -f null /dev/null && \
+    ffmpeg -ss $START -to $END -i "$FILE_PATH" -c:v libvpx-vp9 -b:v 0 -crf 30 -map_chapters -1 -pass 2 -c:a libopus -b:a 192k -sn $OUT_NAME
