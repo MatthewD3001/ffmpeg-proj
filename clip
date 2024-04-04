@@ -2,7 +2,7 @@
 
 print_help(){
     echo "Hello! Proper usage of this is as follows:"
-    echo "dhjasklfhfclip \"FILE_PATH\" START END OUT_NAME"
+    echo "\"FILE_PATH\" START END OUT_NAME"
 }
 
 if [ ${1,,} = help ]; then
